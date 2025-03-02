@@ -1,0 +1,74 @@
+# 中年人招聘系统数据库ER图描述
+
+## 实体
+
+1. **userInformations（用户信息表）**
+   - 主键: _id
+   - 属性: phone, password, userType, name, avatar, gender, age, education, workExperience, skills, introduction, registeredCapital, scale, companyDescription, companyImages, createTime, updateTime
+   - 说明: 存储所有用户信息，包括求职者(userType=1)和企业(userType=2)
+
+2. **jobs（职位信息表）**
+   - 主键: _id
+   - 属性: title, salary, companyId, companyName, experience, education, location, address, description, requirement, status, createTime, updateTime
+   - 说明: 存储企业发布的职位信息
+
+3. **applications（应聘申请表）**
+   - 主键: _id
+   - 属性: userId, jobId, status, createTime, updateTime
+   - 说明: 记录求职者对职位的申请信息
+
+4. **messages（消息表）**
+   - 主键: _id
+   - 属性: senderId, receiverId, type, title, content, isRead, createTime
+   - 说明: 存储系统中的消息通知
+
+5. **favorites-job（职位收藏表）**
+   - 主键: _id
+   - 属性: userId, jobId, createTime
+   - 说明: 记录用户收藏的职位信息
+
+## 关系
+
+1. **企业发布职位**
+   - 关系: userInformations(userType=2) 1:N jobs
+   - 外键: jobs.companyId → userInformations._id
+   - 说明: 一个企业可以发布多个职位，一个职位只属于一个企业
+
+2. **求职者申请职位**
+   - 关系: userInformations(userType=1) 1:N applications
+   - 外键: applications.userId → userInformations._id
+   - 说明: 一个求职者可以提交多个应聘申请，一个应聘申请只属于一个求职者
+
+3. **职位接收申请**
+   - 关系: jobs 1:N applications
+   - 外键: applications.jobId → jobs._id
+   - 说明: 一个职位可以收到多个应聘申请，一个应聘申请只针对一个职位
+
+4. **用户发送消息**
+   - 关系: userInformations 1:N messages(senderId)
+   - 外键: messages.senderId → userInformations._id
+   - 说明: 一个用户可以发送多条消息
+
+5. **用户接收消息**
+   - 关系: userInformations 1:N messages(receiverId)
+   - 外键: messages.receiverId → userInformations._id
+   - 说明: 一个用户可以接收多条消息
+
+6. **用户收藏职位**
+   - 关系: userInformations 1:N favorites-job
+   - 外键: favorites-job.userId → userInformations._id
+   - 说明: 一个用户可以收藏多个职位，一个收藏记录只属于一个用户
+
+7. **职位被收藏**
+   - 关系: jobs 1:N favorites-job
+   - 外键: favorites-job.jobId → jobs._id
+   - 说明: 一个职位可以被多个用户收藏，一个收藏记录只对应一个职位
+
+## ER图表示
+
+ER图应包含以下元素:
+1. 五个实体表示为矩形(userInformations, jobs, applications, messages, favorites-job)
+2. 每个实体内列出主要属性
+3. 实体间的关系用连线表示，并标明关系类型(1:N)
+4. 外键关系用箭头指向被引用的主键
+5. 可选：使用不同颜色区分不同类型的实体或关系 

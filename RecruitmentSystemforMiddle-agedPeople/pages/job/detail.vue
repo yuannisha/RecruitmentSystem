@@ -69,7 +69,7 @@
 		</view>
 		
 		<!-- 操作按钮 -->
-		<view class="action-bar">
+		<view class="action-bar" v-if="userInfo.userType !== 2">
 			<button 
 				class="collect-btn" 
 				:class="{ 'collected': isCollected }"

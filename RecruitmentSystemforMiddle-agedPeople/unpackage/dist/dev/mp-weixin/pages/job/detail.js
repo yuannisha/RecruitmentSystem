@@ -193,12 +193,14 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   } : {}, {
     s: common_vendor.t($data.jobInfo.description),
     t: common_vendor.t($data.jobInfo.requirement),
-    v: common_vendor.t($data.isCollected ? "★" : "☆"),
-    w: common_vendor.t($data.isCollected ? "已收藏" : "收藏"),
-    x: $data.isCollected ? 1 : "",
-    y: common_vendor.o((...args) => $options.handleCollect && $options.handleCollect(...args)),
-    z: common_vendor.o((...args) => $options.handleApply && $options.handleApply(...args))
-  });
+    v: $data.userInfo.userType !== 2
+  }, $data.userInfo.userType !== 2 ? {
+    w: common_vendor.t($data.isCollected ? "★" : "☆"),
+    x: common_vendor.t($data.isCollected ? "已收藏" : "收藏"),
+    y: $data.isCollected ? 1 : "",
+    z: common_vendor.o((...args) => $options.handleCollect && $options.handleCollect(...args)),
+    A: common_vendor.o((...args) => $options.handleApply && $options.handleApply(...args))
+  } : {});
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);
 wx.createPage(MiniProgramPage);
